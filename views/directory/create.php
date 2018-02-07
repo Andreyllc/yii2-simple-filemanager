@@ -3,8 +3,8 @@
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model \DeLuxis\Yii2SimpleFilemanager\models\DirectoryForm */
-/* @var $directory \DeLuxis\Yii2SimpleFilemanager\models\Directory */
+/* @var $model \components\fileManager\models\DirectoryForm */
+/* @var $directory \components\fileManager\models\Directory */
 
 $this->title = Yii::t('filemanager', 'Create directory');
 

@@ -1,14 +1,14 @@
 <?php
 
 use yii\helpers\Html;
-use \DeLuxis\Yii2SimpleFilemanager\models\Directory;
-use \DeLuxis\Yii2SimpleFilemanager\models\File;
-use \DeLuxis\Yii2SimpleFilemanager\models\Item;
+use \components\fileManager\models\Directory;
+use \components\fileManager\models\File;
+use \components\fileManager\models\Item;
 
 /** @var \yii\data\ArrayDataProvider $dataProvider */
 /** @var Directory $directory */
 
-\DeLuxis\Yii2SimpleFilemanager\assets\Asset::register($this);
+\components\fileManager\assets\Asset::register($this);
 
 $this->title = Yii::t('filemanager', 'File manager');
 

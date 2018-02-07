@@ -1,24 +1,25 @@
 <?php
 
-namespace DeLuxis\Yii2SimpleFilemanager;
+namespace components\fileManager;
 
 use yii\base\Module;
 
 /**
  * Class SimpleFilemanagerModule
- * @package DeLuxis\Yii2SimpleFilemanager
+ * @package components\fileManager
  * @property string $fullUploadPath
  */
 class SimpleFilemanagerModule extends Module
 {
-    public $controllerNamespace = 'DeLuxis\Yii2SimpleFilemanager\controllers';
-    public $uploadPath = '@webroot' . DIRECTORY_SEPARATOR . 'upload';
-    public $urlPath = '@web/upload';
-
+    /** @var string  */
+    public $controllerNamespace = 'components\fileManager\controllers';
+    /** @var string  */
+    public $uploadPath = '@webroot' . DIRECTORY_SEPARATOR . UPLOAD_DIR;
+    /** @var string  */
+    public $urlPath = '@web/' . UPLOAD_DIR;
+    /** @var array  */
     public $icons = [];
-
-    private $_uploadPath;
-
+    /** @var array  */
     public $defaultIcons = [
         'dir' => 'fa-folder-o',
         'file' => 'fa-file-o',
@@ -31,6 +32,9 @@ class SimpleFilemanagerModule extends Module
         'application/x-gzip' => 'fa-file-archive-o',
         'text/plain' => 'fa-file-text-o',
     ];
+
+    /** @var string */
+    private $_uploadPath;
 
     public function init()
     {

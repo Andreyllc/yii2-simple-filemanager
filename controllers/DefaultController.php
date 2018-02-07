@@ -1,16 +1,16 @@
 <?php
 
-namespace DeLuxis\Yii2SimpleFilemanager\controllers;
+namespace components\fileManager\controllers;
 
-use DeLuxis\Yii2SimpleFilemanager\models\Directory;
-use DeLuxis\Yii2SimpleFilemanager\SimpleFilemanagerModule;
+use components\fileManager\models\Directory;
+use components\fileManager\SimpleFilemanagerModule;
 use yii\data\ArrayDataProvider;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 
 /**
  * Class DefaultController
- * @package DeLuxis\Yii2SimpleFilemanager\controllers
+ * @package components\fileManager\controllers
  * @property SimpleFilemanagerModule $module
  */
 class DefaultController extends Controller

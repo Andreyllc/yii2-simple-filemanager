@@ -1,13 +1,13 @@
 <?php
 
-namespace DeLuxis\Yii2SimpleFilemanager\models;
+namespace components\fileManager\models;
 
-use DeLuxis\Yii2SimpleFilemanager\SimpleFilemanagerModule;
+use components\fileManager\SimpleFilemanagerModule;
 use yii\web\BadRequestHttpException;
 
 /**
  * Class File
- * @package DeLuxis\Yii2SimpleFilemanager\models
+ * @package components\fileManager\models
  * @property string $mime
  * @property string $url
  * @property Directory $directory

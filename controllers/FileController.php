@@ -1,10 +1,10 @@
 <?php
 
-namespace DeLuxis\Yii2SimpleFilemanager\controllers;
+namespace components\fileManager\controllers;
 
-use DeLuxis\Yii2SimpleFilemanager\models\Directory;
-use DeLuxis\Yii2SimpleFilemanager\models\File;
-use DeLuxis\Yii2SimpleFilemanager\models\UploadForm;
+use components\fileManager\models\Directory;
+use components\fileManager\models\File;
+use components\fileManager\models\UploadForm;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\UploadedFile;

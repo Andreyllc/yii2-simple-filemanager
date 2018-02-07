@@ -1,6 +1,6 @@
 <?php
 
-namespace DeLuxis\Yii2SimpleFilemanager\assets;
+namespace components\fileManager\assets;
 
 use yii\web\AssetBundle;
 

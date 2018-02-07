@@ -1,12 +1,12 @@
 <?php
 
-namespace DeLuxis\Yii2SimpleFilemanager\models;
+namespace components\fileManager\models;
 
 use yii\base\Model;
 
 /**
  * Class Item
- * @package DeLuxis\Yii2SimpleFilemanager\models
+ * @package components\fileManager\models
  *
  * @property string $name
  * @property string $type

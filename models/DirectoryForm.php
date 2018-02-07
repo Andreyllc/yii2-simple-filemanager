@@ -6,14 +6,14 @@
  * Time: 15:03
  */
 
-namespace DeLuxis\Yii2SimpleFilemanager\models;
+namespace components\fileManager\models;
 
 
 use yii\base\Model;
 
 /**
  * Class DirectoryForm
- * @package DeLuxis\Yii2SimpleFilemanager\models
+ * @package components\fileManager\models
  * @property Directory $directory
  */
 class DirectoryForm extends Model

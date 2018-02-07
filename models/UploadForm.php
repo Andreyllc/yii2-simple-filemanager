@@ -1,6 +1,6 @@
 <?php
 
-namespace DeLuxis\Yii2SimpleFilemanager\models;
+namespace components\fileManager\models;
 
 
 use yii\base\Model;

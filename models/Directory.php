@@ -1,14 +1,14 @@
 <?php
 
-namespace DeLuxis\Yii2SimpleFilemanager\models;
+namespace components\fileManager\models;
 
 use Yii;
-use DeLuxis\Yii2SimpleFilemanager\SimpleFilemanagerModule;
+use components\fileManager\SimpleFilemanagerModule;
 use yii\base\InvalidParamException;
 
 /**
  * Class Directory
- * @package DeLuxis\Yii2SimpleFilemanager\models
+ * @package components\fileManager\models
  * @property array $list
  * @property boolean $isRoot
  * @property Directory|null $parent

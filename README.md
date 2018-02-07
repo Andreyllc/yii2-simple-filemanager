@@ -55,7 +55,7 @@ On an example of the [basic application template](https://github.com/yiisoft/yii
 ```
 'modules' => [
     'filemanager' => [
-        'class' => 'DeLuxis\Yii2SimpleFilemanager\SimpleFilemanagerModule'
+        'class' => 'components\fileManager\SimpleFilemanagerModule'
     ],
 ],
 ```
@@ -74,7 +74,7 @@ public function init()
 
     $this->modules = [
         'filemanager' => [
-            'class' => 'DeLuxis\Yii2SimpleFilemanager\SimpleFilemanagerModule',
+            'class' => 'components\fileManager\SimpleFilemanagerModule',
             'as access' => [
                 'class' => '\yii\filters\AccessControl',
                 'rules' => [
