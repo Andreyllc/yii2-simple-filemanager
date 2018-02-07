@@ -19,7 +19,7 @@ class FileController extends Controller
 
         $directory = Directory::createByPath($path);
 
-        $model       = new UploadForm();
+        $model = new UploadForm();
         $model->path = $path;
 
         if (\Yii::$app->request->isPost) {
@@ -32,7 +32,7 @@ class FileController extends Controller
 
         return $this->render('upload', [
             'directory' => $directory,
-            'model'     => $model
+            'model' => $model
         ]);
     }
 

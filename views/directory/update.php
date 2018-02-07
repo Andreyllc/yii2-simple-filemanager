@@ -6,9 +6,9 @@ use yii\widgets\ActiveForm;
 /* @var $model \DeLuxis\Yii2SimpleFilemanager\models\DirectoryForm */
 /* @var $directory \DeLuxis\Yii2SimpleFilemanager\models\Directory */
 
-$this->title                   = Yii::t('filemanager', 'Rename directory');
+$this->title = Yii::t('filemanager', 'Rename directory');
 
-if ( ! isset($this->params['breadcrumbs'])) {
+if (!isset($this->params['breadcrumbs'])) {
     $this->params['breadcrumbs'] = [];
 }
 

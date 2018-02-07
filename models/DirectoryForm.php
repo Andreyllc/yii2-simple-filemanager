@@ -53,8 +53,9 @@ class DirectoryForm extends Model
 
     public function save()
     {
-        if ($this->scenario == self::SCENARIO_RENAME)
+        if ($this->scenario == self::SCENARIO_RENAME) {
             return $this->rename();
+        }
 
         return mkdir($this->directory->fullPath . $this->name, 0755, true);
     }
@@ -69,7 +70,7 @@ class DirectoryForm extends Model
      */
     public function getDirectory()
     {
-        if ( ! isset($this->_directory)) {
+        if (!isset($this->_directory)) {
             $this->_directory = Directory::createByPath($this->path);
         }
 

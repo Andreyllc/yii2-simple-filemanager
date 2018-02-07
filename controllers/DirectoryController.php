@@ -23,7 +23,7 @@ class DirectoryController extends Controller
             throw new BadRequestHttpException();
         }
 
-        $model       = new DirectoryForm();
+        $model = new DirectoryForm();
         $model->path = $path;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -33,7 +33,7 @@ class DirectoryController extends Controller
         }
 
         return $this->render('create', [
-            'model'     => $model,
+            'model' => $model,
             'directory' => Directory::createByPath($path)
         ]);
     }
@@ -46,10 +46,10 @@ class DirectoryController extends Controller
 
         $directory = Directory::createByPath($path);
 
-        $model           = new DirectoryForm();
-        $model->path     = $directory->parent->path;
-        $model->name     = $directory->name;
-        $model->newName     = $directory->name;
+        $model = new DirectoryForm();
+        $model->path = $directory->parent->path;
+        $model->name = $directory->name;
+        $model->newName = $directory->name;
         $model->scenario = DirectoryForm::SCENARIO_RENAME;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -59,7 +59,7 @@ class DirectoryController extends Controller
         }
 
         return $this->render('update', [
-            'model'     => $model,
+            'model' => $model,
             'directory' => $directory
         ]);
     }

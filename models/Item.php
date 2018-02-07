@@ -32,11 +32,12 @@ class Item extends Model
 
     public function getFullPath()
     {
-        if (!isset($this->_fullPath)){
+        if (!isset($this->_fullPath)) {
             $this->_fullPath = $this->root . $this->path;
 
-            if (!is_file($this->_fullPath) && substr($this->_fullPath, -1) !== DIRECTORY_SEPARATOR)
+            if (!is_file($this->_fullPath) && substr($this->_fullPath, -1) !== DIRECTORY_SEPARATOR) {
                 $this->_fullPath .= DIRECTORY_SEPARATOR;
+            }
         }
 
         return $this->_fullPath;

@@ -53,7 +53,7 @@ class File extends Item
      */
     public static function createByPath($path)
     {
-        $file       = new File();
+        $file = new File();
         $file->root = SimpleFilemanagerModule::getInstance()->fullUploadPath;
         $file->path = $path;
 

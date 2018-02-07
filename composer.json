@@ -1,24 +1,27 @@
 {
-    "name": "de-luxis/yii2-simple-filemanager",
-    "description": "Simple filemanager for yii2 framework",
-    "type": "yii2-extension",
-    "keywords": ["yii", "filemanager"],
-    "version": "1.0.0",
-    "license": "MIT",
-    "require": {
-        "yiisoft/yii2": "*",
-        "yiisoft/yii2-bootstrap": "*",
-        "components/font-awesome": ">=4.0"
-    },
-    "authors": [
-        {
-            "name": "Stepan Ipatyev",
-            "email": "istepan@yandex.ru"
-        }
-    ],
-    "autoload": {
-        "psr-4": {
-            "DeLuxis\\Yii2SimpleFilemanager\\": "/"
-        }
+  "name": "de-luxis/yii2-simple-filemanager",
+  "description": "Simple filemanager for yii2 framework",
+  "type": "yii2-extension",
+  "keywords": [
+    "yii",
+    "filemanager"
+  ],
+  "version": "1.0.0",
+  "license": "MIT",
+  "require": {
+    "yiisoft/yii2": "*",
+    "yiisoft/yii2-bootstrap": "*",
+    "components/font-awesome": ">=4.0"
+  },
+  "authors": [
+    {
+      "name": "Stepan Ipatyev",
+      "email": "istepan@yandex.ru"
     }
+  ],
+  "autoload": {
+    "psr-4": {
+      "DeLuxis\\Yii2SimpleFilemanager\\": "/"
+    }
+  }
 }

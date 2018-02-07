@@ -30,7 +30,7 @@ class DefaultController extends Controller
         $directory = Directory::createByPath($path);
 
         return $this->render('index', [
-            'directory'    => $directory,
+            'directory' => $directory,
             'dataProvider' => new ArrayDataProvider(['allModels' => $directory->list])
         ]);
     }

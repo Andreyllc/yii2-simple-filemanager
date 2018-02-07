@@ -48,7 +48,7 @@ class UploadForm extends Model
     {
         $directory = Directory::createByPath($this->$attribute);
 
-        if ( ! $directory->isExist) {
+        if (!$directory->isExist) {
             $this->addError($attribute, \Yii::t('filemanager', 'Is set to nonexistent path.'));
         } elseif (is_file($directory->fullPath)) {
             $this->addError($attribute, \Yii::t('filemanager', 'On the specified path there is a file.'));

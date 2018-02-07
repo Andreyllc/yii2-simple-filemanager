@@ -42,7 +42,7 @@ class Directory extends Item
     {
         $breadcrumbs[] = [
             'label' => Yii::t('filemanager', 'File manager'),
-            'url'   => ['default/index']
+            'url' => ['default/index']
         ];
 
         if ($this->isRoot) {
@@ -54,15 +54,16 @@ class Directory extends Item
         $currentPath = '';
 
         foreach ($directoriesList as $n => $directory) {
-            if (!$directory)
+            if (!$directory) {
                 continue;
+            }
 
-            if ( ! $deactivateLast || $n < count($directoriesList) - 1) {
+            if (!$deactivateLast || $n < count($directoriesList) - 1) {
                 $currentPath .= DIRECTORY_SEPARATOR . $directory;
 
                 $breadcrumbs[] = [
                     'label' => $directory,
-                    'url'   => ['default/index', 'path' => $currentPath]
+                    'url' => ['default/index', 'path' => $currentPath]
                 ];
             } else {
                 $breadcrumbs[] = $directory;
@@ -90,7 +91,7 @@ class Directory extends Item
             $path .= DIRECTORY_SEPARATOR;
         }
 
-        if ( ! is_dir($path)) {
+        if (!is_dir($path)) {
             throw new InvalidParamException();
         }
 
@@ -121,7 +122,7 @@ class Directory extends Item
             $result = array_merge($directories, $files);
         }
 
-        if ( ! $this->isRoot) {
+        if (!$this->isRoot) {
             array_unshift($result, (object)[
                 'name' => '..',
                 'path' => $this->parent->path,
@@ -139,7 +140,7 @@ class Directory extends Item
      */
     public static function createByPath($path)
     {
-        $directory       = new Directory();
+        $directory = new Directory();
         $directory->root = SimpleFilemanagerModule::getInstance()->fullUploadPath;
 
         if ($path) {

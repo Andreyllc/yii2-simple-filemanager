@@ -7,11 +7,11 @@ use yii\widgets\ActiveForm;
 
 $this->title = Yii::t('filemanager', 'Upload files');
 
-if ( ! isset($this->params['breadcrumbs'])) {
+if (!isset($this->params['breadcrumbs'])) {
     $this->params['breadcrumbs'] = [];
 }
 
-$this->params['breadcrumbs']   = array_merge($this->params['breadcrumbs'], $directory->getBreadcrumbs(false));
+$this->params['breadcrumbs'] = array_merge($this->params['breadcrumbs'], $directory->getBreadcrumbs(false));
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>

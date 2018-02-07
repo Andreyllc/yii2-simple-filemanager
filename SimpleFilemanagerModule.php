@@ -20,16 +20,16 @@ class SimpleFilemanagerModule extends Module
     private $_uploadPath;
 
     public $defaultIcons = [
-        'dir'                => 'fa-folder-o',
-        'file'               => 'fa-file-o',
-        'image/gif'          => 'fa-file-image-o',
-        'image/tiff'         => 'fa-file-image-o',
-        'image/png'          => 'fa-file-image-o',
-        'image/jpeg'         => 'fa-file-image-o',
-        'application/pdf'    => 'fa-file-pdf-o',
-        'application/zip'    => 'fa-file-archive-o',
+        'dir' => 'fa-folder-o',
+        'file' => 'fa-file-o',
+        'image/gif' => 'fa-file-image-o',
+        'image/tiff' => 'fa-file-image-o',
+        'image/png' => 'fa-file-image-o',
+        'image/jpeg' => 'fa-file-image-o',
+        'application/pdf' => 'fa-file-pdf-o',
+        'application/zip' => 'fa-file-archive-o',
         'application/x-gzip' => 'fa-file-archive-o',
-        'text/plain'         => 'fa-file-text-o',
+        'text/plain' => 'fa-file-text-o',
     ];
 
     public function init()
@@ -40,19 +40,19 @@ class SimpleFilemanagerModule extends Module
 
         $this->icons = array_merge($this->defaultIcons, $this->icons);
 
-        if ( ! isset(\Yii::$app->i18n->translations['filemanager'])) {
+        if (!isset(\Yii::$app->i18n->translations['filemanager'])) {
             \Yii::$app->i18n->translations['filemanager'] = [
-                'class'          => 'yii\i18n\PhpMessageSource',
+                'class' => 'yii\i18n\PhpMessageSource',
                 'sourceLanguage' => 'en-US',
-                'basePath'       => $this->basePath . DIRECTORY_SEPARATOR . 'messages',
-                'fileMap'        => ['filemanager' => 'filemanager.php'],
+                'basePath' => $this->basePath . DIRECTORY_SEPARATOR . 'messages',
+                'fileMap' => ['filemanager' => 'filemanager.php'],
             ];
         }
     }
 
     public function getFullUploadPath()
     {
-        if ( ! isset($this->_uploadPath)) {
+        if (!isset($this->_uploadPath)) {
             $this->_uploadPath = \Yii::getAlias($this->uploadPath);
         }
 
@@ -61,7 +61,7 @@ class SimpleFilemanagerModule extends Module
 
     private function _checkPath()
     {
-        if ( ! is_dir($this->fullUploadPath)) {
+        if (!is_dir($this->fullUploadPath)) {
             mkdir($this->fullUploadPath, 0755, true);
         }
     }
