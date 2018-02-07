@@ -1,16 +1,21 @@
 <?php
 
-namespace components\fileManager\controllers;
+namespace app\modules\fileManager\controllers;
 
-use components\fileManager\models\Directory;
-use components\fileManager\models\File;
-use components\fileManager\models\UploadForm;
+use app\modules\fileManager\models\Directory;
+use app\modules\fileManager\models\File;
+use app\modules\fileManager\models\UploadForm;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\UploadedFile;
 
 class FileController extends Controller
 {
+    /**
+     * @param $path
+     * @return string|\yii\web\Response
+     * @throws BadRequestHttpException
+     */
     public function actionUpload($path)
     {
         if (strstr($path, '../')) {
@@ -36,6 +41,11 @@ class FileController extends Controller
         ]);
     }
 
+    /**
+     * @param $path
+     * @return \yii\web\Response
+     * @throws BadRequestHttpException
+     */
     public function actionDelete($path)
     {
         if (strstr($path, '../')) {

@@ -1,12 +1,12 @@
 <?php
 
-namespace components\fileManager\models;
+namespace app\modules\fileManager\models;
 
 use yii\base\Model;
 
 /**
  * Class Item
- * @package components\fileManager\models
+ * @package app\modules\fileManager\models
  *
  * @property string $name
  * @property string $type

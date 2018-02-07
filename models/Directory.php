@@ -1,14 +1,14 @@
 <?php
 
-namespace components\fileManager\models;
+namespace app\modules\fileManager\models;
 
 use Yii;
-use components\fileManager\SimpleFilemanagerModule;
+use app\modules\fileManager\SimpleFilemanagerModule;
 use yii\base\InvalidParamException;
 
 /**
  * Class Directory
- * @package components\fileManager\models
+ * @package app\modules\fileManager\models
  * @property array $list
  * @property boolean $isRoot
  * @property Directory|null $parent
@@ -16,6 +16,9 @@ use yii\base\InvalidParamException;
  */
 class Directory extends Item
 {
+    /**
+     * @return Directory|null
+     */
     public function getParent()
     {
         if ($this->isRoot) {
@@ -38,6 +41,10 @@ class Directory extends Item
         ]);
     }
 
+    /**
+     * @param bool $deactivateLast
+     * @return array
+     */
     public function getBreadcrumbs($deactivateLast = true)
     {
         $breadcrumbs[] = [
@@ -73,16 +80,25 @@ class Directory extends Item
         return $breadcrumbs;
     }
 
+    /**
+     * @return bool
+     */
     public function getIsRoot()
     {
         return $this->path === DIRECTORY_SEPARATOR;
     }
 
+    /**
+     * @return mixed
+     */
     public function getIcon()
     {
         return SimpleFilemanagerModule::getInstance()->icons['dir'];
     }
 
+    /**
+     * @return array
+     */
     public function getList()
     {
         $path = $this->fullPath;
@@ -101,32 +117,42 @@ class Directory extends Item
 
         if (count($items)) {
 
-            $directories = array_filter($items, 'is_dir');
+            if ($directories = array_filter($items, 'is_dir')) {
+                $directories = array_map(function ($directory) {
+                    return [
+                        'path' => str_replace($this->root, '', $directory),
+                        'icon' => $this->getIcon(),
+                        'name' => basename($directory),
+                        'type' => 'directory',
+                        'time' => filectime($directory),
+                    ];
+                }, $directories);
+            }
 
-            $directories = array_map(function ($directory) {
-                return new Directory([
-                    'root' => $this->root,
-                    'path' => str_replace($this->root, '', $directory)
-                ]);
-            }, $directories);
-
-            $files = array_filter($items, 'is_file');
-
-            $files = array_map(function ($file) {
-                return new File([
-                    'root' => $this->root,
-                    'path' => str_replace($this->root, '', $file)
-                ]);
-            }, $files);
+            if ($files = array_filter($items, 'is_file')) {
+                $fileObject = new File(['root' => $this->root]);
+                $files = array_map(function ($file) use ($fileObject) {
+                    $fileObject->path = str_replace($this->root, '', $file);
+                    return [
+                        'url' => $fileObject->url,
+                        'icon' => $fileObject->getIcon(),
+                        'name' => basename($file),
+                        'type' => 'file',
+                        'path' => $fileObject->path,
+                        'time' => filectime($file),
+                    ];
+                }, $files);
+            }
 
             $result = array_merge($directories, $files);
         }
 
         if (!$this->isRoot) {
-            array_unshift($result, (object)[
+            array_unshift($result, [
                 'name' => '..',
                 'path' => $this->parent->path,
-                'icon' => 'fa-level-up'
+                'icon' => 'fa-level-up',
+                'type' => 'directory',
             ]);
         }
 
@@ -140,7 +166,7 @@ class Directory extends Item
      */
     public static function createByPath($path)
     {
-        $directory = new Directory();
+        $directory = new self();
         $directory->root = SimpleFilemanagerModule::getInstance()->fullUploadPath;
 
         if ($path) {

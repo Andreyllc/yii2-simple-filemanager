@@ -1,13 +1,13 @@
 <?php
 
-namespace components\fileManager\models;
+namespace app\modules\fileManager\models;
 
-use components\fileManager\SimpleFilemanagerModule;
+use app\modules\fileManager\SimpleFilemanagerModule;
 use yii\web\BadRequestHttpException;
 
 /**
  * Class File
- * @package components\fileManager\models
+ * @package app\modules\fileManager\models
  * @property string $mime
  * @property string $url
  * @property Directory $directory
@@ -16,7 +16,7 @@ class File extends Item
 {
     public function getUrl()
     {
-        return \Yii::getAlias(SimpleFilemanagerModule::getInstance()->urlPath . $this->path);
+        return SimpleFilemanagerModule::getInstance()->urlPath . $this->path;
     }
 
     public function getMime()
@@ -24,6 +24,9 @@ class File extends Item
         return mime_content_type($this->fullPath);
     }
 
+    /**
+     * @return bool|string
+     */
     public function getIcon()
     {
         /**
@@ -38,6 +41,8 @@ class File extends Item
         if (isset($module->icons[$this->type])) {
             return $module->icons[$this->type];
         }
+
+        return false;
     }
 
     public function getDirectory()

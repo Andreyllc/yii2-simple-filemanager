@@ -1,22 +1,23 @@
 <?php
 
-namespace components\fileManager;
+namespace app\modules\fileManager;
 
+use Yii;
 use yii\base\Module;
+use yii\helpers\FileHelper;
 
 /**
  * Class SimpleFilemanagerModule
- * @package components\fileManager
+ * @package app\modules\fileManager
  * @property string $fullUploadPath
+ * @property string $urlPath
  */
 class SimpleFilemanagerModule extends Module
 {
+    const BASE_DIR = 'files';
+
     /** @var string  */
-    public $controllerNamespace = 'components\fileManager\controllers';
-    /** @var string  */
-    public $uploadPath = '@webroot' . DIRECTORY_SEPARATOR . UPLOAD_DIR;
-    /** @var string  */
-    public $urlPath = '@web/' . UPLOAD_DIR;
+    public $controllerNamespace;
     /** @var array  */
     public $icons = [];
     /** @var array  */
@@ -35,11 +36,24 @@ class SimpleFilemanagerModule extends Module
 
     /** @var string */
     private $_uploadPath;
+    /** @var string  */
+    private $_urlPath;
 
+    /**
+     * @throws \yii\base\Exception
+     */
     public function init()
     {
         parent::init();
 
+        defined('UPLOAD_DIR') or define('UPLOAD_DIR', 'uploads');
+
+        $this->controllerNamespace = 'app\modules\fileManager\controllers';
+
+        $this->_urlPath = yii::getAlias('@web/' . UPLOAD_DIR . '/' . self::BASE_DIR);
+
+        $webroot = FileHelper::normalizePath(yii::getAlias('@webroot'));
+        $this->_uploadPath = $webroot . DIRECTORY_SEPARATOR . UPLOAD_DIR . DIRECTORY_SEPARATOR . self::BASE_DIR;
         $this->_checkPath();
 
         $this->icons = array_merge($this->defaultIcons, $this->icons);
@@ -54,19 +68,37 @@ class SimpleFilemanagerModule extends Module
         }
     }
 
+    /**
+     * @return string
+     */
     public function getFullUploadPath()
     {
-        if (!isset($this->_uploadPath)) {
-            $this->_uploadPath = \Yii::getAlias($this->uploadPath);
+        if (!$this->_uploadPath) {
+            throw new \DomainException('Upload directory not found!');
         }
 
         return $this->_uploadPath;
     }
 
+    /**
+     * @return string
+     */
+    public function getUrlPath()
+    {
+        if (!$this->_urlPath) {
+            throw new \DomainException('Web address for file not found!');
+        }
+
+        return $this->_urlPath;
+    }
+
+    /**
+     * @throws \yii\base\Exception
+     */
     private function _checkPath()
     {
-        if (!is_dir($this->fullUploadPath)) {
-            mkdir($this->fullUploadPath, 0755, true);
+        if (!is_dir($this->_uploadPath)) {
+            FileHelper::createDirectory($this->_uploadPath);
         }
     }
 }

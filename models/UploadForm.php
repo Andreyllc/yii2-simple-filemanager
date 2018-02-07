@@ -1,6 +1,6 @@
 <?php
 
-namespace components\fileManager\models;
+namespace app\modules\fileManager\models;
 
 
 use yii\base\Model;

@@ -6,28 +6,28 @@
  * Time: 15:03
  */
 
-namespace components\fileManager\models;
+namespace app\modules\fileManager\models;
 
-
+use Yii;
 use yii\base\Model;
+use yii\helpers\FileHelper;
+use yii\helpers\Inflector;
 
 /**
  * Class DirectoryForm
- * @package components\fileManager\models
+ * @package app\modules\fileManager\models
  * @property Directory $directory
  */
 class DirectoryForm extends Model
 {
-    const SCENARIO_RENAME = 'rename';
-
+    /** @var string */
     public $name;
-    public $newName;
+    /** @var string */
+    public $oldName;
+    /** @var string */
     public $path;
-
-    /**
-     * @var Directory
-     */
-    private $_directory;
+    /** @var bool */
+    public $isNew = true;
 
     public function rules()
     {
@@ -35,34 +35,32 @@ class DirectoryForm extends Model
             [['name', 'path'], 'required'],
             ['name', 'match', 'pattern' => '/\//', 'not' => true],
             ['path', 'match', 'pattern' => '/..\//', 'not' => true],
-
-            ['newName', 'required', 'on' => self::SCENARIO_RENAME],
-            ['newName', 'match', 'pattern' => '/\//', 'not' => true, 'on' => self::SCENARIO_RENAME],
-            ['newName', 'compare', 'compareAttribute' => 'name', 'operator' => '!=']
+            ['oldName', 'safe'],
         ];
     }
 
     public function attributeLabels()
     {
         return [
-            'name' => \Yii::t('filemanager', 'Name'),
-            'newName' => \Yii::t('filemanager', 'New name'),
-            'path' => \Yii::t('filemanager', 'Path')
+            'name' => Yii::t('filemanager', 'Name'),
         ];
     }
 
+    /**
+     * @throws \yii\base\Exception
+     * @throws \yii\base\ErrorException
+     */
     public function save()
     {
-        if ($this->scenario == self::SCENARIO_RENAME) {
-            return $this->rename();
+        $this->name = Inflector::slug($this->name, '_');
+        if ($this->oldName) {
+            if ($this->oldName != $this->name) {
+                FileHelper::copyDirectory($this->directory->fullPath . $this->oldName, $this->directory->fullPath . $this->name);
+                FileHelper::removeDirectory($this->directory->fullPath . $this->oldName);
+            }
         }
 
-        return mkdir($this->directory->fullPath . $this->name, 0755, true);
-    }
-
-    public function rename()
-    {
-        return rename($this->directory->fullPath . $this->name, $this->directory->fullPath . $this->newName);
+        FileHelper::createDirectory($this->directory->fullPath . $this->name);
     }
 
     /**
@@ -70,10 +68,6 @@ class DirectoryForm extends Model
      */
     public function getDirectory()
     {
-        if (!isset($this->_directory)) {
-            $this->_directory = Directory::createByPath($this->path);
-        }
-
-        return $this->_directory;
+        return Directory::createByPath($this->path);
     }
 }

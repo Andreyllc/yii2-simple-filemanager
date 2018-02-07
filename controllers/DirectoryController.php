@@ -1,16 +1,30 @@
 <?php
 
-namespace components\fileManager\controllers;
+namespace app\modules\fileManager\controllers;
 
 use Yii;
-use components\fileManager\models\Directory;
-use components\fileManager\models\DirectoryForm;
+use app\modules\fileManager\models\Directory;
+use app\modules\fileManager\models\DirectoryForm;
+use yii\filters\VerbFilter;
 use yii\helpers\FileHelper;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 
 class DirectoryController extends Controller
 {
+    public function behaviors() {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['post'],
+                    'create' => ['post'],
+                    'update' => ['post'],
+                ],
+            ]
+        ];
+    }
+
     /**
      * @param null|string $path
      *
@@ -26,10 +40,13 @@ class DirectoryController extends Controller
         $model = new DirectoryForm();
         $model->path = $path;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['default/index', 'path' => $model->path]);
-        } else {
-            Yii::error($model->errors);
+        if ($model->load(Yii::$app->request->post())) {
+            try {
+                $model->save();
+                return $this->redirect(['default/index', 'path' => $model->path]);
+            } catch (\Exception $e) {
+                yii::$app->session->setFlash('error', $e->getMessage());
+            }
         }
 
         return $this->render('create', [
@@ -38,6 +55,11 @@ class DirectoryController extends Controller
         ]);
     }
 
+    /**
+     * @param string $path
+     * @return string|\yii\web\Response
+     * @throws BadRequestHttpException
+     */
     public function actionUpdate($path)
     {
         if (strstr($path, '../')) {
@@ -49,13 +71,15 @@ class DirectoryController extends Controller
         $model = new DirectoryForm();
         $model->path = $directory->parent->path;
         $model->name = $directory->name;
-        $model->newName = $directory->name;
-        $model->scenario = DirectoryForm::SCENARIO_RENAME;
+        $model->isNew = false;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['default/index', 'path' => $model->path]);
-        } else {
-            Yii::error($model->errors);
+        if ($model->load(Yii::$app->request->post())) {
+            try {
+                $model->save();
+                return $this->redirect(['default/index', 'path' => $model->path]);
+            } catch (\Exception $e) {
+                yii::$app->session->setFlash('error', $e->getMessage());
+            }
         }
 
         return $this->render('update', [
@@ -64,14 +88,18 @@ class DirectoryController extends Controller
         ]);
     }
 
+    /**
+     * @param $path
+     * @return \yii\web\Response
+     * @throws BadRequestHttpException
+     * @throws \yii\base\ErrorException
+     */
     public function actionDelete($path)
     {
         if (strstr($path, '../')) {
             throw new BadRequestHttpException();
         }
-
         $directory = Directory::createByPath($path);
-
         FileHelper::removeDirectory($directory->fullPath);
 
         return $this->redirect(['default/index', 'path' => $directory->parent->path]);

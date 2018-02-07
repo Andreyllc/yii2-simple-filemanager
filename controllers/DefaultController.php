@@ -1,16 +1,17 @@
 <?php
 
-namespace components\fileManager\controllers;
+namespace app\modules\fileManager\controllers;
 
-use components\fileManager\models\Directory;
-use components\fileManager\SimpleFilemanagerModule;
+use app\modules\fileManager\models\Directory;
+use app\modules\fileManager\SimpleFilemanagerModule;
+use Yii;
 use yii\data\ArrayDataProvider;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 
 /**
  * Class DefaultController
- * @package components\fileManager\controllers
+ * @package app\modules\fileManager\controllers
  * @property SimpleFilemanagerModule $module
  */
 class DefaultController extends Controller
@@ -27,11 +28,24 @@ class DefaultController extends Controller
             throw new BadRequestHttpException();
         }
 
-        $directory = Directory::createByPath($path);
+        try {
+            $directory = Directory::createByPath($path);
+            $list = $directory->list;
+        } catch (\Exception $e) {
+            yii::$app->session->setFlash('error', $e->getMessage());
+            return $this->redirect(yii::$app->request->referrer);
+        }
 
         return $this->render('index', [
             'directory' => $directory,
-            'dataProvider' => new ArrayDataProvider(['allModels' => $directory->list])
+            'dataProvider' => new ArrayDataProvider(
+                [
+                    'allModels' => $list,
+                    'sort' => [
+                        'attributes' => ['name', 'time'],
+                    ],
+                ]
+            )
         ]);
     }
 }

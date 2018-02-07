@@ -2,8 +2,8 @@
 
 use yii\widgets\ActiveForm;
 
-/* @var $directory \components\fileManager\models\Directory */
-/* @var $model \components\fileManager\models\UploadForm */
+/* @var $directory \app\modules\fileManager\models\Directory */
+/* @var $model \app\modules\fileManager\models\UploadForm */
 
 $this->title = Yii::t('filemanager', 'Upload files');
 
