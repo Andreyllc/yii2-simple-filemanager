@@ -58,6 +58,7 @@ class DirectoryForm extends Model
                 FileHelper::copyDirectory($this->directory->fullPath . $this->oldName, $this->directory->fullPath . $this->name);
                 FileHelper::removeDirectory($this->directory->fullPath . $this->oldName);
             }
+            return;
         }
 
         FileHelper::createDirectory($this->directory->fullPath . $this->name);
